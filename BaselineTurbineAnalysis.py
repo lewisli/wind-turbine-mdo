@@ -145,7 +145,7 @@ hubS.machine_rating = rotor.control.ratedPower/1000
 
 hubS.run()
 
-print "Estimate of Hub Component Sizes for the NREL 5 MW Reference Turbine"
+print "Estimate of Hub Component Sizes for the Baseline 5 MW Reference Turbine"
 print "Hub Components"
 print '  Hub: {0:8.1f} kg'.format(hubS.hub.mass)  # 31644.47
 print '  Pitch system: {0:8.1f} kg'.format(hubS.pitchSystem.mass) # 17003.98
@@ -243,7 +243,6 @@ from turbine_costsse.turbine_costsse.turbine_costsse import Turbine_CostsSE
 turbine = Turbine_CostsSE()
 
 # NREL 5 MW turbine component masses based on Sunderland model approach
-
 # Rotor
 turbine.blade_mass = 17650.67  # inline with the windpact estimates
 turbine.hub_mass = 31644.5
@@ -278,8 +277,6 @@ turbine.month =  12
 
 turbine.run()
 
-print "The results for the NREL 5 MW Reference Turbine in an offshore 20 m water depth location are:"
-print
 print "Overall rotor cost with 3 advanced blades is ${0:.2f} USD".format(turbine.rotorCC.cost)
 print "Blade cost is ${0:.2f} USD".format(turbine.rotorCC.bladeCC.cost)
 print "Hub cost is ${0:.2f} USD".format(turbine.rotorCC.hubCC.cost)
@@ -304,8 +301,8 @@ print
 
 
 
-# AEP0 = rotor.AEP
-# print 'AEP0 =', AEP0
+AEP0 = rotor.AEP
+print 'AEP0 = %d MWH' % (AEP0/1000)
 
 # import matplotlib.pyplot as plt
 # plt.plot(rotor.V, rotor.P/1e6)

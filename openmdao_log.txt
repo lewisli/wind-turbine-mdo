@@ -1,0 +1,231 @@
+
+
+*********** BEGIN NEW LOG ************** (2015-11-01 20:17:07.552505) PID=2484
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-01 20:19:23.632008) PID=2498
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-01 20:35:46.426099) PID=2544
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-01 20:43:55.749628) PID=2565
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:07:53.553976) PID=2585
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:08:46.863874) PID=2592
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:12:23.950398) PID=2601
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:12:46.207632) PID=2608
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:14:28.310691) PID=2628
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:15:09.058253) PID=2635
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:16:24.313713) PID=2648
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:16:46.287720) PID=2657
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:19:26.039545) PID=2688
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:19:50.195812) PID=2710
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:20:00.755654) PID=2725
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:21:36.080096) PID=2792
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:23:22.462389) PID=2875
+
+Nov 09 15:23:23 E driver: Variable 'optimizer' must be in ['ALHSO', 'ALPSO', 'COBYLA', 'CONMIN', 'FILTERSD', 'KSOPT', 'MIDACO', 'NSGA2', 'PSQP', 'SDPEN', 'SLSQP', 'SOLVOPT'], but a value of SNOPT <type 'str'> was specified.
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:23:35.581747) PID=2891
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:23:59.375975) PID=2911
+
+Nov 09 15:24:01 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:24:28.801863) PID=2927
+
+Nov 09 15:24:30 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:25:03.375313) PID=2952
+
+Nov 09 15:25:04 E driver: Variable 'optimizer' must be in ['ALHSO', 'ALPSO', 'COBYLA', 'CONMIN', 'FILTERSD', 'KSOPT', 'MIDACO', 'NSGA2', 'PSQP', 'SDPEN', 'SLSQP', 'SOLVOPT'], but a value of SNOP <type 'str'> was specified.
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:25:17.472537) PID=2967
+
+Nov 09 15:25:18 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:25:29.721137) PID=2983
+
+Nov 09 15:25:31 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:25:40.880011) PID=3003
+
+Nov 09 15:25:43 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:26:05.793787) PID=3033
+
+Nov 09 15:26:07 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:26:17.650779) PID=3048
+
+Nov 09 15:26:19 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:26:39.327941) PID=3064
+
+Nov 09 15:26:40 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:26:49.147567) PID=3079
+
+Nov 09 15:26:50 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:28:15.812188) PID=3119
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:29:14.437706) PID=3163
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:37:18.328532) PID=3219
+
+Nov 09 15:37:21 E driver: Variable 'optimizer' must be in ['ALHSO', 'ALPSO', 'COBYLA', 'CONMIN', 'FILTERSD', 'KSOPT', 'MIDACO', 'NSGA2', 'PSQP', 'SDPEN', 'SLSQP', 'SOLVOPT'], but a value of SNOPT <type 'str'> was specified.
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:43:10.626981) PID=3378
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:43:43.110265) PID=3385
+
+Nov 09 15:43:44 E driver: Variable 'optimizer' must be in ['ALHSO', 'ALPSO', 'COBYLA', 'CONMIN', 'FILTERSD', 'KSOPT', 'MIDACO', 'NSGA2', 'PSQP', 'SDPEN', 'SLSQP', 'SOLVOPT'], but a value of SNOPT <type 'str'> was specified.
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:44:05.379005) PID=3405
+
+Nov 09 15:44:06 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:44:47.476174) PID=3426
+
+Nov 09 15:44:48 E driver: Variable 'optimizer' must be in ['ALHSO', 'ALPSO', 'COBYLA', 'CONMIN', 'FILTERSD', 'KSOPT', 'MIDACO', 'NSGA2', 'PSQP', 'SDPEN', 'SLSQP', 'SOLVOPT'], but a value of NLPQL <type 'str'> was specified.
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:45:07.845474) PID=3446
+
+Nov 09 15:45:09 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:45:45.016206) PID=3467
+
+Nov 09 15:45:47 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:46:14.141088) PID=3487
+
+Nov 09 15:46:15 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:47:21.745932) PID=3521
+
+Nov 09 15:47:23 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:47:35.135207) PID=3530
+
+Nov 09 15:47:36 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:48:37.264198) PID=3572
+
+Nov 09 15:48:38 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:48:55.846994) PID=3588
+
+Nov 09 15:48:57 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:50:13.905720) PID=3601
+
+Nov 09 15:50:16 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:50:43.465512) PID=3616
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:50:51.363529) PID=3632
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:51:40.791085) PID=3675
+
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:52:38.402705) PID=3702
+
+Nov 09 15:52:40 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:54:34.184220) PID=3771
+
+Nov 09 15:54:38 E driver: Variable 'optimizer' must be in ['ALHSO', 'ALPSO', 'COBYLA', 'CONMIN', 'FILTERSD', 'KSOPT', 'MIDACO', 'NSGA2', 'PSQP', 'SDPEN', 'SLSQP', 'SOLVOPT'], but a value of SNOPT <type 'str'> was specified.
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:54:51.681016) PID=3787
+
+Nov 09 15:54:58 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 15:55:44.039575) PID=3802
+
+Nov 09 15:55:46 W driver: The following components will execute EVERY iteration of this workflow (unnecessarily): ['cdf', 'setup', 'analysis', 'geom', 'dt', 'spline', '_pseudo_6']
+
+
+*********** BEGIN NEW LOG ************** (2015-11-09 16:03:10.484196) PID=3861
+
