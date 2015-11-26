@@ -297,10 +297,6 @@ print
 print "The overall turbine cost is ${0:.2f} USD".format(turbine.turbine_cost)
 print
 
-
-
-
-
 AEP0 = rotor.AEP
 print 'AEP0 = %d MWH' % (AEP0/1000)
 

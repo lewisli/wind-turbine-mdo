@@ -59,3 +59,6 @@ target/
 # Optimizer Output files
 *.out
 *.txt
+
+# OSX Related
+*.DS_Store
