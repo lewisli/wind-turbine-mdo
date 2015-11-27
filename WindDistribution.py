@@ -14,6 +14,11 @@ def ComputeScaleFunction(Mean, Shape):
 def GenerateWeibull(Shape,Scale,Samples):
 	return Scale*np.random.weibull(Shape, Samples)
 
+def EstimateCapacity(PowerCurve,PowerCurveVelocity, DesignWindSpeed):
+	ClosestWindSpeed, Idx = find_nearest(PowerCurveVelocity, DesignWindSpeed)
+	return PowerCurve[Idx]# Power in MW
+
+
 # Calculate AEP assuming a Weibull distribution
 def CalculateAEPWeibull(PowerCurve, PowerCurveVelocity, HubHeight, WeibullWindShape, \
 	WindReferenceHeight, WindReferenceMean, ShearExponent):
@@ -22,7 +27,7 @@ def CalculateAEPWeibull(PowerCurve, PowerCurveVelocity, HubHeight, WeibullWindSh
 	HubMeanVelocity = WindReferenceMean*(np.true_divide(HubHeight,\
 		WindReferenceHeight))**ShearExponent
 
-	print "Mean Velocity at %d m is %f m/s" %(HubHeight,HubMeanVelocity)
+	print "Mean Wind Velocity at %d m is %f m/s" %(HubHeight,HubMeanVelocity)
 
 	# Calcluate corresponding scale parameter (Lambda)
 	WeibullScale = ComputeScaleFunction(HubMeanVelocity,WeibullWindShape)
@@ -38,7 +43,7 @@ def CalculateAEPWeibull(PowerCurve, PowerCurveVelocity, HubHeight, WeibullWindSh
 	# AEP is equal to rotor.P*count (in MWH)
 	AEP = np.dot(count,PowerCurve)
 
-	return AEP
+	return AEP,WeibullScale
 
 # Calculate AEP for a given Power Curve assuming constant wind speed
 def CalculateAEPConstantWind(PowerCurve, PowerCurveVelocity, WindSpeed):

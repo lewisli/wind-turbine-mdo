@@ -28,13 +28,6 @@ from drivese.drive import Drive4pt
 from WindDistribution import CalculateAEPConstantWind
 from WindDistribution import CalculateAEPWeibull
 
-# Given mean, and shape of Weibull distriution, estimate the scale parameter
-def ComputeScaleFunction(Mean, Shape):
-	return Mean/math.gamma(1 + 1.0/Shape)
-
-def GenerateWeibull(Shape,Scale,Samples):
-	return Scale*np.random.weibull(Shape, Samples)
-
 
 ################################################################################
 ### 1. Aerodynamic and structural performance using RotorSE
@@ -111,7 +104,7 @@ def EvaluateAEP(Diameter, HubHeight, RPM_Max):
 
 	rotor.control.Vout = 30.0 #25.0  # (Float, m/s): cut-out wind speed !!!!!!!!!!!!!!
 
-
+	# Rated power should be 
 	rotor.control.ratedPower = 1.5e6  # (Float, W): rated power !!!!!!!!!!!!!!
 	rotor.control.pitch = 0.0  # (Float, deg): pitch angle in region 2 (and region 3 for fixed pitch machines)
 	rotor.control.minOmega = 0.0  # (Float, rpm): minimum allowed rotor rotation speed
@@ -145,6 +138,7 @@ def EvaluateAEP(Diameter, HubHeight, RPM_Max):
 	# RPM Curve
 	#AEP = CalculateAEPConstantWind(PowerCurve, PowerCurveVelocity, 7.5)
 
+	# Weibull Wind Parameters
 	WindReferenceHeight = 30
 	WindReferenceMeanVelocity = 6
 	ShearFactor = 0.2
@@ -154,7 +148,7 @@ def EvaluateAEP(Diameter, HubHeight, RPM_Max):
 	 	WindReferenceMeanVelocity, ShearFactor)
 
 
-	print "Estimated with diameter %d AEP is %f MHW " %(Diameter,AEP)
+	print "Diameter %d m and hub height of %d m yields AEP is %f MHW " %(Diameter,HubHeight,AEP)
 
 	return AEP
 

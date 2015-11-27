@@ -20,7 +20,7 @@ from rotorse.rotoraero import Coefficients, SetupRunVarSpeed, \
 from rotorse.rotoraerodefaults import RotorAeroVSVPWithCCBlade,GeometrySpline, \
 		CCBladeGeometry, CCBlade, CSMDrivetrain, WeibullCDF, \
 		WeibullWithMeanCDF, RayleighCDF
-from rotorse.rotor import RotorSE
+#from rotorse.rotor import RotorSE
 from rotorse.precomp import Profile, Orthotropic2DMaterial, CompositeSection
 
 from drivese.hub import HubSE
@@ -33,6 +33,7 @@ from drivese.drive import Drive4pt
 cdf_type = 'weibull'
 #rotor = RotorSE()
 rotor = RotorAeroVSVPWithCCBlade(cdf_type)
+rotor.configure()
 
 # Define blade and chord length
 rotor.B = 3 # Number of blades (Do not change)
@@ -121,7 +122,8 @@ print 'ratedConditions.Omega =', rotor.ratedConditions.Omega
 print 'ratedConditions.pitch =', rotor.ratedConditions.pitch
 print 'ratedConditions.T =', rotor.ratedConditions.T
 print 'ratedConditions.Q =', rotor.ratedConditions.Q
-#print 'mass_one_blade =', rotor.mass_one_blade
+print 'Rated Power =', rotor.control.ratedPower/1000
+print 'mass_one_blade =', rotor.mass_one_blade
 # print 'mass_all_blades =', rotor.mass_all_blades
 # print 'I_all_blades =', rotor.I_all_blades
 # print 'freq =', rotor.freq
@@ -136,10 +138,10 @@ print 'ratedConditions.Q =', rotor.ratedConditions.Q
 hubS = HubSE()
 hubS.rotor_diameter = rotor.Rtip*2 # m
 hubS.blade_number  = rotor.B 
-hubS.blade_root_diameter   = 3.542
+hubS.blade_root_diameter = 3.542
+hubS.blade_root_diameter = 2.5
 
 hubS.L_rb = rotor.Rhub
-hubS.gamma = 5.0
 hubS.MB1_location = np.array([-0.5, 0.0, 0.0])
 hubS.machine_rating = rotor.control.ratedPower/1000
 
@@ -151,157 +153,157 @@ print '  Hub: {0:8.1f} kg'.format(hubS.hub.mass)  # 31644.47
 print '  Pitch system: {0:8.1f} kg'.format(hubS.pitchSystem.mass) # 17003.98
 print '  Nose cone: {0:8.1f} kg'.format(hubS.spinner.mass) # 1810.50
 
-################################################################################
-### 3. Drive train + Nacelle Mass estimation
-# NREL 5 MW Rotor Variables
-nace = Drive4pt()
-nace.rotor_diameter = rotor.Rtip *2 # m
-nace.rotor_speed = rotor.control.maxOmega # #rpm m/s
-nace.machine_rating = hubS.machine_rating
-nace.DrivetrainEfficiency = 0.95
+# ################################################################################
+# ### 3. Drive train + Nacelle Mass estimation
+# # NREL 5 MW Rotor Variables
+# nace = Drive4pt()
+# nace.rotor_diameter = rotor.Rtip *2 # m
+# nace.rotor_speed = rotor.control.maxOmega # #rpm m/s
+# nace.machine_rating = hubS.machine_rating
+# nace.DrivetrainEfficiency = 0.95
 
- # 6.35e6 #4365248.74 # Nm
-nace.rotor_torque =  1.5 * (nace.machine_rating * 1000 / \
-	nace.DrivetrainEfficiency) / (nace.rotor_speed * (pi / 30))
-nace.rotor_thrust = 599610.0 # N
-nace.rotor_mass = 0.0 #accounted for in F_z # kg
+#  # 6.35e6 #4365248.74 # Nm
+# nace.rotor_torque =  1.5 * (nace.machine_rating * 1000 / \
+# 	nace.DrivetrainEfficiency) / (nace.rotor_speed * (pi / 30))
+# nace.rotor_thrust = 599610.0 # N
+# nace.rotor_mass = 0.0 #accounted for in F_z # kg
 
-nace.rotor_bending_moment = -16665000.0 # Nm same as rotor_bending_moment_y
-nace.rotor_bending_moment_x = 330770.0# Nm
-nace.rotor_bending_moment_y = -16665000.0 # Nm
-nace.rotor_bending_moment_z = 2896300.0 # Nm
-nace.rotor_force_x = 599610.0 # N
-nace.rotor_force_y = 186780.0 # N
-nace.rotor_force_z = -842710.0 # N
+# nace.rotor_bending_moment = -16665000.0 # Nm same as rotor_bending_moment_y
+# nace.rotor_bending_moment_x = 330770.0# Nm
+# nace.rotor_bending_moment_y = -16665000.0 # Nm
+# nace.rotor_bending_moment_z = 2896300.0 # Nm
+# nace.rotor_force_x = 599610.0 # N
+# nace.rotor_force_y = 186780.0 # N
+# nace.rotor_force_z = -842710.0 # N
 
-# NREL 5 MW Drivetrain variables
-nace.drivetrain_design = 'geared' # geared 3-stage Gearbox with induction generator machine
-nace.gear_ratio = 96.76 # 97:1 as listed in the 5 MW reference document
-nace.gear_configuration = 'eep' # epicyclic-epicyclic-parallel
-#nace.bevel = 0 # no bevel stage
-nace.crane = True # onboard crane present
-nace.shaft_angle = 5.0 #deg
-nace.shaft_ratio = 0.10
-nace.Np = [3,3,1]
-nace.ratio_type = 'optimal'
-nace.shaft_type = 'normal'
-nace.uptower_transformer=False
-nace.shrink_disc_mass = 333.3*nace.machine_rating/1000.0 # estimated
-nace.carrier_mass = 8000.0 # estimated
-nace.mb1Type = 'CARB'
-nace.mb2Type = 'SRB'
-nace.flange_length = 0.5 #m
-nace.overhang = 5.0
-nace.gearbox_cm = 0.1
-nace.hss_length = 1.5
-nace.check_fatigue = 0 #0 if no fatigue check, 1 if parameterized fatigue check, 2 if known loads inputs
-nace.blade_number=rotor.B
-nace.cut_in=rotor.control.Vin #cut-in m/s
-nace.cut_out=rotor.control.Vout #cut-out m/s
-nace.Vrated=rotor.ratedConditions.V #rated windspeed m/s
-nace.weibull_k = rotor.weibull_shape_factor # windepeed distribution shape parameter
+# # NREL 5 MW Drivetrain variables
+# nace.drivetrain_design = 'geared' # geared 3-stage Gearbox with induction generator machine
+# nace.gear_ratio = 96.76 # 97:1 as listed in the 5 MW reference document
+# nace.gear_configuration = 'eep' # epicyclic-epicyclic-parallel
+# #nace.bevel = 0 # no bevel stage
+# nace.crane = True # onboard crane present
+# nace.shaft_angle = 5.0 #deg
+# nace.shaft_ratio = 0.10
+# nace.Np = [3,3,1]
+# nace.ratio_type = 'optimal'
+# nace.shaft_type = 'normal'
+# nace.uptower_transformer=False
+# nace.shrink_disc_mass = 333.3*nace.machine_rating/1000.0 # estimated
+# nace.carrier_mass = 8000.0 # estimated
+# nace.mb1Type = 'CARB'
+# nace.mb2Type = 'SRB'
+# nace.flange_length = 0.5 #m
+# nace.overhang = 5.0
+# nace.gearbox_cm = 0.1
+# nace.hss_length = 1.5
+# nace.check_fatigue = 0 #0 if no fatigue check, 1 if parameterized fatigue check, 2 if known loads inputs
+# nace.blade_number=rotor.B
+# nace.cut_in=rotor.control.Vin #cut-in m/s
+# nace.cut_out=rotor.control.Vout #cut-out m/s
+# nace.Vrated=rotor.ratedConditions.V #rated windspeed m/s
+# nace.weibull_k = rotor.weibull_shape_factor # windepeed distribution shape parameter
 
-# Might need to change this...
-nace.weibull_A = rotor.cdf_mean_wind_speed  # windspeed distribution scale parameter
+# # Might need to change this...
+# nace.weibull_A = rotor.cdf_mean_wind_speed  # windspeed distribution scale parameter
 
-nace.T_life=20. #design life in years
-nace.IEC_Class_Letter = 'A'
-nace.L_rb = hubS.L_rb # length from hub center to main bearing, leave zero if unknown
+# nace.T_life=20. #design life in years
+# nace.IEC_Class_Letter = 'A'
+# nace.L_rb = hubS.L_rb # length from hub center to main bearing, leave zero if unknown
 
-# NREL 5 MW Tower Variables
-nace.tower_top_diameter = 3.78 # m
+# # NREL 5 MW Tower Variables
+# nace.tower_top_diameter = 3.78 # m
 
-nace.run()
+# nace.run()
 
-print "Estimate of Nacelle Component Sizes for the NREL 5 MW Reference Turbine"
-print 'Low speed shaft: {0:8.1f} kg'.format(nace.lowSpeedShaft.mass)
-print 'Main bearings: {0:8.1f} kg'.format(nace.mainBearing.mass + nace.secondBearing.mass)
-print 'Gearbox: {0:8.1f} kg'.format(nace.gearbox.mass)
-print 'High speed shaft & brakes: {0:8.1f} kg'.format(nace.highSpeedSide.mass)
-print 'Generator: {0:8.1f} kg'.format(nace.generator.mass)
-print 'Variable speed electronics: {0:8.1f} kg'.format(nace.above_yaw_massAdder.vs_electronics_mass)
-print 'Overall mainframe:{0:8.1f} kg'.format(nace.above_yaw_massAdder.mainframe_mass)
-print '     Bedplate: {0:8.1f} kg'.format(nace.bedplate.mass)
-print 'Electrical connections: {0:8.1f} kg'.format(nace.above_yaw_massAdder.electrical_mass)
-print 'HVAC system: {0:8.1f} kg'.format(nace.above_yaw_massAdder.hvac_mass )
-print 'Nacelle cover: {0:8.1f} kg'.format(nace.above_yaw_massAdder.cover_mass)
-print 'Yaw system: {0:8.1f} kg'.format(nace.yawSystem.mass)
-print 'Overall nacelle: {0:8.1f} kg'.format(nace.nacelle_mass, nace.nacelle_cm[0], nace.nacelle_cm[1], nace.nacelle_cm[2], nace.nacelle_I[0], nace.nacelle_I[1], nace.nacelle_I[2]  )
-
-
-################################################################################
-### 4. Tower Analysis
-## Problem with TowerSE..
+# print "Estimate of Nacelle Component Sizes for the NREL 5 MW Reference Turbine"
+# print 'Low speed shaft: {0:8.1f} kg'.format(nace.lowSpeedShaft.mass)
+# print 'Main bearings: {0:8.1f} kg'.format(nace.mainBearing.mass + nace.secondBearing.mass)
+# print 'Gearbox: {0:8.1f} kg'.format(nace.gearbox.mass)
+# print 'High speed shaft & brakes: {0:8.1f} kg'.format(nace.highSpeedSide.mass)
+# print 'Generator: {0:8.1f} kg'.format(nace.generator.mass)
+# print 'Variable speed electronics: {0:8.1f} kg'.format(nace.above_yaw_massAdder.vs_electronics_mass)
+# print 'Overall mainframe:{0:8.1f} kg'.format(nace.above_yaw_massAdder.mainframe_mass)
+# print '     Bedplate: {0:8.1f} kg'.format(nace.bedplate.mass)
+# print 'Electrical connections: {0:8.1f} kg'.format(nace.above_yaw_massAdder.electrical_mass)
+# print 'HVAC system: {0:8.1f} kg'.format(nace.above_yaw_massAdder.hvac_mass )
+# print 'Nacelle cover: {0:8.1f} kg'.format(nace.above_yaw_massAdder.cover_mass)
+# print 'Yaw system: {0:8.1f} kg'.format(nace.yawSystem.mass)
+# print 'Overall nacelle: {0:8.1f} kg'.format(nace.nacelle_mass, nace.nacelle_cm[0], nace.nacelle_cm[1], nace.nacelle_cm[2], nace.nacelle_I[0], nace.nacelle_I[1], nace.nacelle_I[2]  )
 
 
-################################################################################
-## 5. Turbine captial costs analysis
-## Needs to be coupled with rest of system...
+# ################################################################################
+# ### 4. Tower Analysis
+# ## Problem with TowerSE..
 
-from turbine_costsse.turbine_costsse.turbine_costsse import Turbine_CostsSE
 
-turbine = Turbine_CostsSE()
+# ################################################################################
+# ## 5. Turbine captial costs analysis
+# ## Needs to be coupled with rest of system...
 
-# NREL 5 MW turbine component masses based on Sunderland model approach
-# Rotor
-turbine.blade_mass = 13845 #17650.67  # inline with the windpact estimates
-turbine.hub_mass = 10083 #31644.5
-turbine.pitch_system_mass = 3588 #17004.0
-turbine.spinner_mass = 775 #1810.5
+# from turbine_costsse.turbine_costsse.turbine_costsse import Turbine_CostsSE
 
-# Drivetrain and Nacelle
-turbine.low_speed_shaft_mass = 3025 #31257.3 
-#bearingsMass = 9731.41
-turbine.main_bearing_mass = 679 #9731.41 / 2
-turbine.second_bearing_mass = 679 #9731.41 / 2
-turbine.gearbox_mass =10241 # 30237.60
-turbine.high_speed_side_mass = 1 #1492.45 # not applicable for benchmark of NREL report
-turbine.generator_mass = 5501 #16699.85
-turbine.bedplate_mass = 19763 # 93090.6 # Main Frame mass from benchmark of NREL report
-turbine.yaw_system_mass = 1875 #11878.24
+# turbine = Turbine_CostsSE()
 
-# Tower
-turbine.tower_mass = 97958 #434559.0
+# # NREL 5 MW turbine component masses based on Sunderland model approach
+# # Rotor
+# turbine.blade_mass = 13845 #17650.67  # inline with the windpact estimates
+# turbine.hub_mass = 10083 #31644.5
+# turbine.pitch_system_mass = 3588 #17004.0
+# turbine.spinner_mass = 775 #1810.5
 
-# Additional non-mass cost model input variables
-turbine.machine_rating = 5000.0
-turbine.advanced = True
-turbine.blade_number = 3
-turbine.drivetrain_design = 'geared'
-turbine.crane = True
-turbine.offshore = True
+# # Drivetrain and Nacelle
+# turbine.low_speed_shaft_mass = 3025 #31257.3 
+# #bearingsMass = 9731.41
+# turbine.main_bearing_mass = 679 #9731.41 / 2
+# turbine.second_bearing_mass = 679 #9731.41 / 2
+# turbine.gearbox_mass =10241 # 30237.60
+# turbine.high_speed_side_mass = 1 #1492.45 # not applicable for benchmark of NREL report
+# turbine.generator_mass = 5501 #16699.85
+# turbine.bedplate_mass = 19763 # 93090.6 # Main Frame mass from benchmark of NREL report
+# turbine.yaw_system_mass = 1875 #11878.24
 
-# Target year for analysis results
-turbine.year = 2010
-turbine.month =  12
+# # Tower
+# turbine.tower_mass = 97958 #434559.0
 
-turbine.run()
+# # Additional non-mass cost model input variables
+# turbine.machine_rating = 5000.0
+# turbine.advanced = True
+# turbine.blade_number = 3
+# turbine.drivetrain_design = 'geared'
+# turbine.crane = True
+# turbine.offshore = True
 
-print "Overall rotor cost with 3 advanced blades is ${0:.2f} USD".format(turbine.rotorCC.cost)
-print "Blade cost is ${0:.2f} USD".format(turbine.rotorCC.bladeCC.cost)
-print "Hub cost is ${0:.2f} USD".format(turbine.rotorCC.hubCC.cost)
-print "Pitch system cost is ${0:.2f} USD".format(turbine.rotorCC.pitchSysCC.cost)
-print "Spinner cost is ${0:.2f} USD".format(turbine.rotorCC.spinnerCC.cost)
-print
-print "Overall nacelle cost is ${0:.2f} USD".format(turbine.nacelleCC.cost)
-print "LSS cost is ${0:.2f} USD".format(turbine.nacelleCC.lssCC.cost)
-print "Main bearings cost is ${0:.2f} USD".format(turbine.nacelleCC.bearingsCC.cost)
-print "Gearbox cost is ${0:.2f} USD".format(turbine.nacelleCC.gearboxCC.cost)
-print "Hight speed side cost is ${0:.2f} USD".format(turbine.nacelleCC.hssCC.cost)
-print "Generator cost is ${0:.2f} USD".format(turbine.nacelleCC.generatorCC.cost)
-print "Bedplate cost is ${0:.2f} USD".format(turbine.nacelleCC.bedplateCC.cost)
-print "Yaw system cost is ${0:.2f} USD".format(turbine.nacelleCC.yawSysCC.cost)
-print
-print "Tower cost is ${0:.2f} USD".format(turbine.towerCC.cost)
-print
-print "The overall turbine cost is ${0:.2f} USD".format(turbine.turbine_cost)
-print
+# # Target year for analysis results
+# turbine.year = 2010
+# turbine.month =  12
 
-AEP0 = rotor.AEP
-print 'AEP0 = %d MWH' % (AEP0/1000)
+# turbine.run()
 
-# import matplotlib.pyplot as plt
-# plt.plot(rotor.V, rotor.P/1e6)
-# plt.xlabel('wind speed (m/s)')
-# plt.ylabel('power (MW)')
-# plt.show()
+# print "Overall rotor cost with 3 advanced blades is ${0:.2f} USD".format(turbine.rotorCC.cost)
+# print "Blade cost is ${0:.2f} USD".format(turbine.rotorCC.bladeCC.cost)
+# print "Hub cost is ${0:.2f} USD".format(turbine.rotorCC.hubCC.cost)
+# print "Pitch system cost is ${0:.2f} USD".format(turbine.rotorCC.pitchSysCC.cost)
+# print "Spinner cost is ${0:.2f} USD".format(turbine.rotorCC.spinnerCC.cost)
+# print
+# print "Overall nacelle cost is ${0:.2f} USD".format(turbine.nacelleCC.cost)
+# print "LSS cost is ${0:.2f} USD".format(turbine.nacelleCC.lssCC.cost)
+# print "Main bearings cost is ${0:.2f} USD".format(turbine.nacelleCC.bearingsCC.cost)
+# print "Gearbox cost is ${0:.2f} USD".format(turbine.nacelleCC.gearboxCC.cost)
+# print "Hight speed side cost is ${0:.2f} USD".format(turbine.nacelleCC.hssCC.cost)
+# print "Generator cost is ${0:.2f} USD".format(turbine.nacelleCC.generatorCC.cost)
+# print "Bedplate cost is ${0:.2f} USD".format(turbine.nacelleCC.bedplateCC.cost)
+# print "Yaw system cost is ${0:.2f} USD".format(turbine.nacelleCC.yawSysCC.cost)
+# print
+# print "Tower cost is ${0:.2f} USD".format(turbine.towerCC.cost)
+# print
+# print "The overall turbine cost is ${0:.2f} USD".format(turbine.turbine_cost)
+# print
+
+# AEP0 = rotor.AEP
+# print 'AEP0 = %d MWH' % (AEP0/1000)
+
+# # import matplotlib.pyplot as plt
+# # plt.plot(rotor.V, rotor.P/1e6)
+# # plt.xlabel('wind speed (m/s)')
+# # plt.ylabel('power (MW)')
+# # plt.show()
