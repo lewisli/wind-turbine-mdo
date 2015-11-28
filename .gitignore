@@ -60,5 +60,9 @@ target/
 *.out
 *.txt
 
+# Images
+*.png
+*.jpg
+
 # OSX Related
 *.DS_Store
