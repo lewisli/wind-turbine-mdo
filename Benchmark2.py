@@ -24,10 +24,8 @@ from rotorse.precomp import Profile, Orthotropic2DMaterial, CompositeSection
 
 from drivese.hub import HubSE
 from drivese.drive import Drive4pt
-
 from towerse.tower import TowerSE
 
-import matplotlib.pyplot as plt
 
 from rotorse.rotor import RotorSE 
 
@@ -47,6 +45,8 @@ from fusedwind.turbine.tower import TowerFromCSProps
 from fusedwind.interface import implement_base
 from commonse.UtilizationSupplement import fatigue, hoopStressEurocode, shellBucklingEurocode, \
     bucklingGL, vonMisesStressUtilization
+
+import matplotlib.pyplot as plt
 
 import frame3dd
 
@@ -653,10 +653,11 @@ print "Land Lease OPEX by turbine: ${:.2f} USD".format(om.opex_breakdown.lease_o
 
 CapitalCost = turbine.turbine_cost + bos.bos_costs / bos.turbine_number
 OperatingCost = om.opex_breakdown.preventative_opex / om.turbine_number + \
-om.opex_breakdown.lease_opex / om.turbine_number
+om.opex_breakdown.lease_opex / om.turbine_number + \
+om.opex_breakdown.corrective_opex / om.turbine_number
 
 Years = 25
-DiscountRate = 0.09
+DiscountRate = 0.08
 
 LCOE = ComputeLCOE(AEP, CapitalCost, OperatingCost, DiscountRate, Years)
 

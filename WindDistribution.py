@@ -36,7 +36,7 @@ def CalculateAEPWeibull(PowerCurve, PowerCurveVelocity, HubHeight,BladeLength, \
 	HubMeanVelocity = ComputeMeanWind(WindReferenceMean, WindReferenceHeight, \
 		HubHeight, BladeLength)
 
-	print "Mean Wind Velocity at %d m is %f m/s" %(HubHeight,HubMeanVelocity)
+	#print "Mean Wind Velocity at %d m is %f m/s" %(HubHeight,HubMeanVelocity)
 
 	# Calcluate corresponding scale parameter (Lambda)
 	WeibullScale = ComputeScaleFunction(HubMeanVelocity,WeibullWindShape)
