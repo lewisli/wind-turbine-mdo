@@ -35,6 +35,7 @@ from WindDistribution import CalculateAEPConstantWind
 from WindDistribution import CalculateAEPWeibull
 from WindDistribution import ComputeScaleFunction
 from WindDistribution import EstimateCapacity
+from WindDistribution import ComputeLCOE
 
 from openmdao.main.api import VariableTree, Component, Assembly, set_as_top
 from openmdao.main.datatypes.api import Int, Float, Array, VarTree, Bool, Slot
@@ -100,7 +101,6 @@ rotor.r_max_chord = 0.23577
 # locations from r_max_chord to tip
 ReferenceChord = [3.2612, 4.5709, 3.3178, 1.4621]
 rotor.chord_sub = [x * np.true_divide(BladeLength,ReferenceBladeLength) for x in ReferenceChord]
-
 
 # (Array, deg): twist at control points.  defined at linearly spaced locations 
 # from r[idx_cylinder] to tip
@@ -323,7 +323,7 @@ PowerCurveVelocity = rotor.V
 HubHeight = rotor.hubHt
 
 AEP,WeibullScale = CalculateAEPWeibull(PowerCurve,PowerCurveVelocity, HubHeight, \
-  	WeibullShapeFactor, WindReferenceHeight, \
+  	BladeLength,WeibullShapeFactor, WindReferenceHeight, \
   	WindReferenceMeanVelocity, ShearFactor)
 
 NamePlateCapacity = EstimateCapacity(PowerCurve,PowerCurveVelocity, rotor.ratedConditions.V)
@@ -342,7 +342,6 @@ print 'I_all_blades =', rotor.I_all_blades
 print 'freq =', rotor.freq
 print 'tip_deflection =', rotor.tip_deflection
 print 'root_bending_moment =', rotor.root_bending_moment
-
 print '##########################################'
 
 ################################################################################
@@ -651,4 +650,17 @@ print "OPEX offshore ${:.2f}: USD".format(om.avg_annual_opex)
 print "Preventative OPEX by turbine: ${:.2f} USD".format(om.opex_breakdown.preventative_opex / om.turbine_number)
 print "Corrective OPEX by turbine: ${:.2f} USD".format(om.opex_breakdown.corrective_opex / om.turbine_number)
 print "Land Lease OPEX by turbine: ${:.2f} USD".format(om.opex_breakdown.lease_opex / om.turbine_number)
-print
+
+CapitalCost = turbine.turbine_cost + bos.bos_costs / bos.turbine_number
+OperatingCost = om.opex_breakdown.preventative_opex / om.turbine_number + \
+om.opex_breakdown.lease_opex / om.turbine_number
+
+Years = 25
+DiscountRate = 0.09
+
+LCOE = ComputeLCOE(AEP, CapitalCost, OperatingCost, DiscountRate, Years)
+
+print "Levelized Cost of Energy over %d years \
+is $%f/kWH" %(Years,LCOE/1000)
+
+
